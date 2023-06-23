@@ -58,7 +58,9 @@ class PetImageClassifier:
             output = self.model.predict(inputs)
             pred = np.argmax(output.asnumpy(), axis=1)
             predictions.append(pred)
-        print(predictions)
+        accuracy = np.mean(np.concatenate(predictions) == np.concatenate(
+            [data['label'].asnumpy() for data in self.test_dataset.create_dict_iterator()]))
+        print(f'Predict accuracy: {accuracy}')
 
 
 class AlexNet(nn.Cell):
